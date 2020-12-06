@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String PASSWORD = "password";
 
     // column table TABLE_KRS
-    public static final String ID_KRS = "id_krs";
+    public static final String ID_KRS = "_id";
     public static final String MK = "mk";
     public static final String SKS = "sks";
     public static final String KELAS = "kelas";

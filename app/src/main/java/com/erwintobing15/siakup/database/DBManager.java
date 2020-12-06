@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import static com.erwintobing15.siakup.database.DatabaseHelper.TABLE_USER;
 
-
-
 public class DBManager {
 
     public static final String KEY_USER_SESSION = "key-user-session";
@@ -102,4 +100,46 @@ public class DBManager {
 
         return true;
     }
+
+    public Cursor allKrs() {
+        String[] columns = new String[] { DatabaseHelper.ID_KRS, DatabaseHelper.MK, DatabaseHelper.SKS,
+                DatabaseHelper.KELAS};
+        Cursor cursor = database.query(DatabaseHelper.TABLE_KRS, columns, null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    public void insertKrs(String mk, String sks, String kelas) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.MK, mk);
+        contentValues.put(DatabaseHelper.SKS, sks);
+        contentValues.put(DatabaseHelper.KELAS, kelas);
+        database.insert(DatabaseHelper.TABLE_KRS, null, contentValues);
+    }
+
+    public int updateKrs(long id_krs, String mk, String sks, String kelas) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.MK, mk);
+        contentValues.put(DatabaseHelper.SKS, sks);
+        contentValues.put(DatabaseHelper.KELAS, kelas);
+        int i = database.update(DatabaseHelper.TABLE_KRS, contentValues, DatabaseHelper.ID_KRS + " = " + id_krs, null);
+        return i;
+    }
+
+    public void deleteKrs(long id_krs) {
+        database.delete(DatabaseHelper.TABLE_KRS, DatabaseHelper.ID_KRS + "=" + id_krs, null);
+    }
+
+    public int countKrsData() {
+        int total = 0;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(" + DatabaseHelper.ID_KRS + ") as Total FROM " + DatabaseHelper.TABLE_KRS, null);
+        if (cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndex("Total"));
+        }
+        return total;
+    }
+
 }
