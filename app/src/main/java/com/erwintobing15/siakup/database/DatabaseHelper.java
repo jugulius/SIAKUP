@@ -21,18 +21,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String SKS = "sks";
     public static final String KELAS = "kelas";
 
-
     // name database
-    static final String DB_NAME = "SIAKUB.DB";
+    static final String DB_NAME = "SIAKUP.DB";
 
     // database version
     static final int DB_VERSION = 1;
 
-    // make query for table TABLE_MATKUL
+    // make query for table TABLE_USER
     private static final String CREATE_TABLE_USER = "create table " + TABLE_USER + "(" +
             _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             NPM + " TEXT, " +
             PASSWORD + " TEXT " +
+            ");";
+
+    // make query for table TABLE_KRS
+    private static final String CREATE_TABLE_KRS = "create table " + TABLE_KRS + "(" +
+            ID_KRS + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            MK + " TEXT, " +
+            SKS + " TEXT, " +
+            KELAS + " TEXT " +
             ");";
 
     public DatabaseHelper(Context context) {
@@ -42,11 +49,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USER);
+        db.execSQL(CREATE_TABLE_KRS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_KRS);
         onCreate(db);
     }
 }
